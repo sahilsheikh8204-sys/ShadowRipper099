@@ -15,11 +15,25 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 999999
 
-    steps:
-    - name: Downloading Essentials...
-          - name: Inspect Ripper script
-      shell: powershell
-      run: |
-        Select-String -Path ".\Ripper.ps1" `
-          -Pattern "Chrome Remote Desktop|start_host|Google\\Chrome Remote Desktop" `
-          -Context 3,5
+        steps:
+      - name: Downloading Essentials...
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "YOUR_URL" -OutFile "Ripper.ps1"
+
+      - name: Inspect Ripper script
+        shell: powershell
+        run: |
+          Select-String -Path ".\Ripper.ps1" `
+            -Pattern "Chrome Remote Desktop|start_host|Google\\Chrome Remote Desktop" `
+            -Context 3,5
+
+      - name: VM is Running...
+        shell: powershell
+        run: |
+          $i = 999999
+          do {
+            Write-Host $i
+            Start-Sleep 60
+            $i--
+          } while ($i -gt 0)
